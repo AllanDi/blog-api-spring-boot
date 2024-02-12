@@ -16,7 +16,7 @@ public class Post {
     private String title;
     private String content;
     private LocalDateTime creatAt;
-    private LocalDateTime udatedAt;
+    private LocalDateTime updatedAt;
 
 
 
