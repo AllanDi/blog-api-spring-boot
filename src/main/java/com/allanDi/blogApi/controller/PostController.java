@@ -23,8 +23,4 @@ public class PostController {
         return postService.savePost(post);
     }
 
-    @GetMapping
-    public List<Post> getAllPosts() {
-        return postService.getAllPosts();
-    }
 }
