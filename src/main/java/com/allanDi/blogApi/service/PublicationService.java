@@ -42,15 +42,9 @@ public class PublicationService {
             Publication existingPost = existingPostOptional.get();
             existingPost.setTitle(updatedPublication.getTitle());
             existingPost.setContent(updatedPublication.getContent());
-            // Adicione outras atualizações conforme necessário
             return repository.save(existingPost);
         } else {
-            // Lógica para tratar quando o recurso não for encontrado
-            // Neste caso, você pode lançar uma exceção ou retornar null, dependendo dos requisitos da sua aplicação
             return null;
         }
     }
-
-
-
 }

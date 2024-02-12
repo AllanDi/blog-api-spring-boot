@@ -18,6 +18,7 @@ public class GetController {
     public GetController(PublicationService publicationService) {
         this.publicationService = publicationService;
     }
+
     @GetMapping
     public List<Publication> getAllPublication() {
         return publicationService.getAllPublication();

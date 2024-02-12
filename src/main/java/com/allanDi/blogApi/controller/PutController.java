@@ -17,11 +17,7 @@ public class PutController {
     }
 
     @PutMapping("/{id}")
-    public Publication updatePublication(@PathVariable Long id, @RequestBody Publication updatedPublication){
+    public Publication updatePublication(@PathVariable Long id, @RequestBody Publication updatedPublication) {
         return publicationService.updatePublication(id, updatedPublication);
     }
-
-
-
-
 }
