@@ -1,4 +1,4 @@
-package com.allanDi.blogapi;
+package com.allanDi.blogApi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

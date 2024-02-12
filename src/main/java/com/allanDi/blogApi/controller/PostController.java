@@ -1,7 +1,7 @@
-package com.allanDi.blogapi.controller;
+package com.allanDi.blogApi.controller;
 
-import com.allanDi.blogapi.model.Post;
-import com.allanDi.blogapi.service.PostService;
+import com.allanDi.blogApi.model.Post;
+import com.allanDi.blogApi.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

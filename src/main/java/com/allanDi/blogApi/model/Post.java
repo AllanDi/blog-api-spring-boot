@@ -1,4 +1,4 @@
-package com.allanDi.blogapi.model;
+package com.allanDi.blogApi.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

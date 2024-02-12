@@ -1,7 +1,7 @@
-package com.allanDi.blogapi.service;
+package com.allanDi.blogApi.service;
 
-import com.allanDi.blogapi.model.Post;
-import com.allanDi.blogapi.repository.PostRepository;
+import com.allanDi.blogApi.model.Post;
+import com.allanDi.blogApi.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;

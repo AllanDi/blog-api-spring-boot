@@ -1,6 +1,6 @@
-package com.allanDi.blogapi.repository;
+package com.allanDi.blogApi.repository;
 
-import com.allanDi.blogapi.model.Post;
+import com.allanDi.blogApi.model.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

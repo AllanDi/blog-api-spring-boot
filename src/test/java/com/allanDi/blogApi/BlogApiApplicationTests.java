@@ -1,4 +1,4 @@
-package com.allanDi.blogapi;
+package com.allanDi.blogApi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
