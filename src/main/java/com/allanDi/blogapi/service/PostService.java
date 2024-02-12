@@ -13,29 +13,31 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    @Autowired PostService(PostRepository postRepository){
+    @Autowired
+    PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
     }
 
-    public Post savePost (Post post){
+    public Post savePost(Post post) {
         validadePost(post);
         return postRepository.save(post);
 
     }
-    private void validadePost(Post post){
-        if(!StringUtils.hasText(post.getTitle())){
+
+    private void validadePost(Post post) {
+        if (!StringUtils.hasText(post.getTitle())) {
             throw new IllegalArgumentException("Title cannot be empty");
         }
-        if(!StringUtils.hasText(post.getContent())){
+        if (!StringUtils.hasText(post.getContent())) {
             throw new IllegalArgumentException("Content cannot be empty");
         }
     }
 
-    public List<Post> getAllPosts(){
+    public List<Post> getAllPosts() {
         return postRepository.findAll();
     }
 
-    }
+}
 
 
 
