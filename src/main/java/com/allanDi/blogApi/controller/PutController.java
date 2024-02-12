@@ -5,20 +5,23 @@ import com.allanDi.blogApi.service.PublicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/post")
-public class PostController {
 
+@RestController
+@RequestMapping("/api/put")
+public class PutController {
     private final PublicationService publicationService;
 
     @Autowired
-    public PostController(PublicationService publicationService) {
+    public PutController(PublicationService publicationService) {
         this.publicationService = publicationService;
     }
 
-    @PostMapping
-    public Publication createPublication(@RequestBody Publication publication) {
-        return publicationService.savePublication(publication);
+    @PutMapping("/{id}")
+    public Publication updatePublication(@PathVariable Long id, @RequestBody Publication updatedPublication){
+        return publicationService.updatePublication(id, updatedPublication);
     }
+
+
+
 
 }

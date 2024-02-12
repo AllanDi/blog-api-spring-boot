@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Post {
+public class Publication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
