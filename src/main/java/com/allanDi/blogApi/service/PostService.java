@@ -21,9 +21,7 @@ public class PostService {
     public Post savePost(Post post) {
         validadePost(post);
         return postRepository.save(post);
-
     }
-
     private void validadePost(Post post) {
         if (!StringUtils.hasText(post.getTitle())) {
             throw new IllegalArgumentException("Title cannot be empty");
@@ -32,11 +30,9 @@ public class PostService {
             throw new IllegalArgumentException("Content cannot be empty");
         }
     }
-
     public List<Post> getAllPosts() {
         return postRepository.findAll();
     }
-
 }
 
 
