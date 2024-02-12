@@ -1,8 +1,12 @@
 package com.allanDi.blogapi.service;
 
+import com.allanDi.blogapi.model.Post;
 import com.allanDi.blogapi.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 @Service
 public class PostService {
@@ -13,4 +17,26 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-}
+    public Post savePost (Post post){
+        validadePost(post);
+        return postRepository.save(post);
+
+    }
+    private void validadePost(Post post){
+        if(!StringUtils.hasText(post.getTitle())){
+            throw new IllegalArgumentException("Title cannot be empty");
+        }
+        if(!StringUtils.hasText(post.getContent())){
+            throw new IllegalArgumentException("Content cannot be empty");
+        }
+    }
+
+    public List<Post> getAllPosts(){
+        return postRepository.findAll();
+    }
+
+    }
+
+
+
+

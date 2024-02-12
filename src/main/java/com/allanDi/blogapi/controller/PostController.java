@@ -13,16 +13,20 @@ import java.util.List;
 @RequestMapping("/api/posts")
 public class PostController {
 
+    private final PostService postService;
+
     @Autowired
-    private PostRepository postRepository;
+    public PostController(PostService postService){
+        this.postService = postService;
+    }
 
     @PostMapping
     public Post createPost(@RequestBody Post post){
-        return postRepository.save(post);
+        return postService.savePost(post);
     }
 
     @GetMapping
     public List<Post> getAllPosts(){
-        return postRepository.findAll();
+        return postService.getAllPosts();
     }
 }
