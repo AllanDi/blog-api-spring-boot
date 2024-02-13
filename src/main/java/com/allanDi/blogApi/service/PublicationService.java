@@ -37,14 +37,10 @@ public class PublicationService {
     }
 
     public Publication updatePublication(Long id, Publication updatedPublication) {
-        Optional<Publication> existingPostOptional = repository.findById(id);
-        if (existingPostOptional.isPresent()) {
-            Publication existingPost = existingPostOptional.get();
-            existingPost.setTitle(updatedPublication.getTitle());
-            existingPost.setContent(updatedPublication.getContent());
-            return repository.save(existingPost);
-        } else {
-            return null;
-        }
+        Publication existingPublication = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Publication id " + id + " not found"));
+        existingPublication.setTitle(updatedPublication.getTitle());
+        existingPublication.setContent(updatedPublication.getContent());
+        return repository.save(existingPublication);
     }
 }
