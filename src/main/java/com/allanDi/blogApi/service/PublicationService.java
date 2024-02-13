@@ -41,7 +41,7 @@ public class PublicationService {
 
     private Publication validateExistingPublication(Long id) {
         Optional<Publication> optionalPublication = repository.findById(id);
-        if (!optionalPublication.isPresent()) {
+        if (optionalPublication.isPresent()) {
             throw new IllegalArgumentException("Publication id " + id + " not found");
         }
         return optionalPublication.get();
