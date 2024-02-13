@@ -20,7 +20,8 @@ public class DeleteController {
     }
 
     @DeleteMapping("/{id}")
-    public Publication deletePublication(@PathVariable Long id){
+    public Publication deletePublication(
+            @PathVariable Long id){
       return publicationService.deletePublication(id);
     }
 

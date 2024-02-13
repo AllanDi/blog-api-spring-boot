@@ -20,7 +20,8 @@ public class PostController {
     }
 
     @PostMapping
-    public Publication createPublication(@RequestBody Publication publication) {
+    public Publication createPublication(
+            @RequestBody Publication publication) {
         return publicationService.createPublication(publication);
     }
 
