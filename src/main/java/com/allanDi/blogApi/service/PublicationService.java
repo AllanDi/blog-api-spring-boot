@@ -42,4 +42,11 @@ public class PublicationService {
         existingPublication.setContent(updatedPublication.getContent());
         return repository.save(existingPublication);
     }
+
+    public Publication deletePublication(Long id){
+        Publication publication = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Publication id " + id + " not found"));
+        publication.setActive(false);
+        return repository.save(publication);
+    }
 }

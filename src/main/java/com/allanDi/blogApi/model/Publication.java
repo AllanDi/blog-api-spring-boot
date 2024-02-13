@@ -20,6 +20,7 @@ public class Publication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    boolean active = true;
     private String title;
     private String content;
 
