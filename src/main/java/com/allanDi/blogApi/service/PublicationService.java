@@ -7,14 +7,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PublicationService {
     private final Repository repository;
-    @Autowired
-    PublicationService(Repository repository) {this.repository = repository;}
 
+    @Autowired
+    PublicationService(Repository repository) {
+        this.repository = repository;
+    }
 
 
     public Publication createPublication(Publication publication) {
@@ -33,7 +34,7 @@ public class PublicationService {
         return createPublication(existingPublication);
     }
 
-    public Publication deletePublication(Long id){
+    public Publication deletePublication(Long id) {
         Publication existingPublication = validateExistingPublication(id);
         existingPublication.setActive(false);
         return createPublication(existingPublication);
