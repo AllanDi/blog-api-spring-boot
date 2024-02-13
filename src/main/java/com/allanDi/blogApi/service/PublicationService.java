@@ -7,28 +7,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PublicationService {
     private final Repository repository;
-
     @Autowired
-    PublicationService(Repository repository) {
-        this.repository = repository;
-    }
+    PublicationService(Repository repository) {this.repository = repository;}
+
+
 
     public Publication createPublication(Publication publication) {
-        validadePublication(publication);
+        validateEmptyPublication(publication);
         return repository.save(publication);
-    }
-
-    private void validadePublication(Publication publication) {
-        if (!StringUtils.hasText(publication.getTitle())) {
-            throw new IllegalArgumentException("Title cannot be empty");
-        }
-        if (!StringUtils.hasText(publication.getContent())) {
-            throw new IllegalArgumentException("Content cannot be empty");
-        }
     }
 
     public List<Publication> readAllPublication() {
@@ -36,17 +27,29 @@ public class PublicationService {
     }
 
     public Publication updatePublication(Long id, Publication updatedPublication) {
-        Publication existingPublication = repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Publication id " + id + " not found"));
+        Publication existingPublication = validateExistingPublication(id);
         existingPublication.setTitle(updatedPublication.getTitle());
         existingPublication.setContent(updatedPublication.getContent());
         return repository.save(existingPublication);
     }
 
     public Publication deletePublication(Long id){
-        Publication publication = repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Publication id " + id + " not found"));
+        Publication publication = validateExistingPublication(id);
         publication.setActive(false);
         return repository.save(publication);
+    }
+
+    private Publication validateExistingPublication(Long id) {
+        Optional<Publication> optionalPublication = repository.findById(id);
+        if (!optionalPublication.isPresent()) {
+            throw new IllegalArgumentException("Publication id " + id + " not found");
+        }
+        return optionalPublication.get();
+    }
+
+    private void validateEmptyPublication(Publication publication) {
+        if (!StringUtils.hasText(publication.getTitle()) || !StringUtils.hasText(publication.getContent())) {
+            throw new IllegalArgumentException("Title or Content cannot be empty");
+        }
     }
 }
