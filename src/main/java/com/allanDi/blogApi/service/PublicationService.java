@@ -30,26 +30,24 @@ public class PublicationService {
         Publication existingPublication = validateExistingPublication(id);
         existingPublication.setTitle(updatedPublication.getTitle());
         existingPublication.setContent(updatedPublication.getContent());
-        return repository.save(existingPublication);
+        return createPublication(existingPublication);
     }
 
     public Publication deletePublication(Long id){
-        Publication publication = validateExistingPublication(id);
-        publication.setActive(false);
-        return repository.save(publication);
-    }
-
-    private Publication validateExistingPublication(Long id) {
-        Optional<Publication> optionalPublication = repository.findById(id);
-        if (optionalPublication.isPresent()) {
-            throw new IllegalArgumentException("Publication id " + id + " not found");
-        }
-        return optionalPublication.get();
+        Publication existingPublication = validateExistingPublication(id);
+        existingPublication.setActive(false);
+        return createPublication(existingPublication);
     }
 
     private void validateEmptyPublication(Publication publication) {
         if (!StringUtils.hasText(publication.getTitle()) || !StringUtils.hasText(publication.getContent())) {
             throw new IllegalArgumentException("Title or Content cannot be empty");
         }
+    }
+
+    private Publication validateExistingPublication(Long id) {
+        Publication existingPublication = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Publication id " + id + " not found"));
+        return existingPublication;
     }
 }
