@@ -20,7 +20,7 @@ public class GetController {
     }
 
     @GetMapping
-    public List<Publication> getAllPublication() {
-        return publicationService.getAllPublication();
+    public List<Publication> readAllPublication() {
+        return publicationService.readAllPublication();
     }
 }

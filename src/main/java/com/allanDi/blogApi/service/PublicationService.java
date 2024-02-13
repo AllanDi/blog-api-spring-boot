@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PublicationService {
@@ -18,7 +17,7 @@ public class PublicationService {
         this.repository = repository;
     }
 
-    public Publication savePublication(Publication publication) {
+    public Publication createPublication(Publication publication) {
         validadePublication(publication);
         return repository.save(publication);
     }
@@ -32,7 +31,7 @@ public class PublicationService {
         }
     }
 
-    public List<Publication> getAllPublication() {
+    public List<Publication> readAllPublication() {
         return repository.findAll();
     }
 
