@@ -16,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,9 +26,12 @@ class PublicationServiceTest {
 
     @Mock
     private Repository repository;
-
     @Mock
-    private Publication validPublication;
+    private Publication validActivePublication;
+    @Mock
+    private Publication validNonActivePublication;
+    @Mock
+    private Publication emptyPublication;
 
     @InjectMocks
     private PublicationService service;
@@ -35,33 +39,29 @@ class PublicationServiceTest {
 
     @BeforeEach
     void setup() {
-        validPublication = new Publication();
-        validPublication.setTitle("Test title");
-        validPublication.setContent("Valid content");
+        validActivePublication = new Publication(
+                1L, true, "Test title", "Test content");
+        validNonActivePublication = new Publication(
+                2L, false, "Test title", "Test content");
+        emptyPublication = new Publication();
     }
 
     @Test
     void whenCreatePublicationWithValidPublication_thenSaveIsCalled() {
-        service.createPublication(validPublication);
-        verify(repository, times(1)).save(validPublication);
+        service.createPublication(validActivePublication);
+        verify(repository, times(1)).save(validActivePublication);
     }
 
     @Test
     void whenCreatePublicationWithInvalidPublication_thenThrowException() {
-        Publication invalidPublication = new Publication();
         assertThrows(IllegalArgumentException.class, () ->
-                service.createPublication(invalidPublication));
+                service.createPublication(emptyPublication));
     }
 
     @Test
     void whenReadAllPublication_thenAllPublicationAreReturned() {
-        Publication publication1 =
-                new Publication(1L, true, "Title publication1",
-                        "Content publication1");
-        Publication publication2 =
-                new Publication(2L, true, "Title publication2",
-                        "Content publication2");
-        List<Publication> mockListPublication = Arrays.asList(publication1, publication2);
+        List<Publication> mockListPublication = Arrays.asList(
+                validActivePublication, validNonActivePublication);
 
         when(repository.findAll()).thenReturn(mockListPublication);
 
@@ -70,6 +70,27 @@ class PublicationServiceTest {
         assertNotNull(returnedListPublication);
         assertEquals(mockListPublication.size(),returnedListPublication.size());
         assertTrue(returnedListPublication.containsAll(mockListPublication));
+    }
+
+    @Test
+    void whenReadPublicationByValidId_thenPublicationByValidIdAreReturned(){
+        Long validId = 1L;
+        when(repository.findById(validId))
+                .thenReturn(Optional.of(validActivePublication));
+
+        Publication foundPublication = service.findByPublicationId(validId);
+
+        assertEquals(validActivePublication, foundPublication);
+    }
+
+    @Test
+    void whenReadPublicationByInvalidId_thenExceptionIsThrows(){
+        Long invalidId = 2L;
+
+        when(repository.findById(invalidId)).thenReturn(Optional.empty());
+
+        assertThrows(IllegalArgumentException.class, () ->
+                service.findByPublicationId(invalidId));
     }
 
 }

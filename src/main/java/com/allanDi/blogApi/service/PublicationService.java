@@ -17,7 +17,6 @@ public class PublicationService {
         this.repository = repository;
     }
 
-
     public Publication createPublication(Publication publication) {
         validateEmptyPublication(publication);
         return repository.save(publication);
