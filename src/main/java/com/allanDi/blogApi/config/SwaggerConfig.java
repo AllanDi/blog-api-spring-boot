@@ -15,4 +15,5 @@ public class SwaggerConfig {
                 .pathsToMatch("/api/**")
                 .build();
     }
+    //http://localhost:8080/swagger-ui/index.html#/
 }
