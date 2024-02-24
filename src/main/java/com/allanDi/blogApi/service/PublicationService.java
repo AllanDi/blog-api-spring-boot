@@ -27,6 +27,11 @@ public class PublicationService {
         return repository.findAll();
     }
 
+    public Publication findByPublicationId(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Publication with id " + id + " not found"));
+    }
+
     public Publication updatePublication(Long id, Publication updatedPublication) {
         Publication existingPublication = validateExistingPublication(id);
         existingPublication.setTitle(updatedPublication.getTitle());
