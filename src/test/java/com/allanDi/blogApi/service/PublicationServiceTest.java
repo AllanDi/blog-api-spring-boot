@@ -29,6 +29,8 @@ class PublicationServiceTest {
     private Publication validNonActivePublication;
     @Mock
     private Publication emptyPublication;
+    @Mock
+    private Publication updatedPublication;
 
     @InjectMocks
     private PublicationService service;
@@ -40,6 +42,8 @@ class PublicationServiceTest {
                 1L, true, "Test title", "Test content");
         validNonActivePublication = new Publication(
                 2L, false, "Test title", "Test content");
+        updatedPublication = new Publication(
+                3L, true, "Test updated title", "Test updated content");
         emptyPublication = new Publication();
     }
 
@@ -82,12 +86,26 @@ class PublicationServiceTest {
 
     @Test
     void whenReadPublicationByInvalidId_thenExceptionIsThrows(){
-        Long invalidId = 2L;
+        Long invalidId = 99L;
 
         when(repository.findById(invalidId)).thenReturn(Optional.empty());
 
         assertThrows(IllegalArgumentException.class, () ->
                 service.findByPublicationId(invalidId));
+    }
+
+    @Test
+    void whenUpdatePublication_thenPublicationShouldBeUpdated(){
+        Long validId = 1l;
+        when(repository.findById(validId)).thenReturn(Optional.of(validActivePublication));
+        when(repository.save(any(Publication.class))).thenReturn(validActivePublication);
+
+        Publication result = service.updatePublication(validId, updatedPublication);
+
+        assertEquals("Test updated title",result.getTitle());
+        assertEquals("Test updated content",result.getContent());
+
+        verify(repository, times(1)).save(validActivePublication);
     }
 
 }
