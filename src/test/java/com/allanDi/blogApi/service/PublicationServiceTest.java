@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 
+import javax.swing.text.html.Option;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -96,7 +97,7 @@ class PublicationServiceTest {
 
     @Test
     void whenUpdatePublication_thenPublicationShouldBeUpdated(){
-        Long validId = 1l;
+        Long validId = 1L;
         when(repository.findById(validId)).thenReturn(Optional.of(validActivePublication));
         when(repository.save(any(Publication.class))).thenReturn(validActivePublication);
 
@@ -105,6 +106,19 @@ class PublicationServiceTest {
         assertEquals("Test updated title",result.getTitle());
         assertEquals("Test updated content",result.getContent());
 
+        verify(repository, times(1)).save(validActivePublication);
+    }
+
+    @Test
+    void whenDeletePublication_thenPublicationShouldBeDeactivate(){
+        Long validId = 1L;
+
+        when(repository.findById(validId)).thenReturn(Optional.of(validActivePublication));
+        when(repository.save(any(Publication.class))).thenAnswer(i -> i.getArgument(0));
+
+        Publication result = service.deletePublication(validId);
+
+        assertFalse(result.isActive());
         verify(repository, times(1)).save(validActivePublication);
     }
 
